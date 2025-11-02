@@ -34,22 +34,20 @@ func setup_buttons():
 	var player1_container = %PitTopContainer
 	var player2_container = %PitBottomContainer
 	
+	pit_buttons.resize(14) # We'll use indices to match the board
+	
 	# Player 2 pits (indices 0-5)
 	for i in range(6):
 		var button = player2_container.get_child(i)
-		pit_buttons.append(button)
+		pit_buttons[i] = button
 		button.pressed.connect(_on_pit_clicked.bind(i))
-	pit_buttons.append(player2_store)
 	
 	# Player 1 pits (indices 7-12, but buttons are in reverse order)
 	for i in range(6):
 		var button = player1_container.get_child(5-i)
-		pit_buttons.append(button)
+		var board_index = i + 7
+		pit_buttons[board_index] = button
 		button.pressed.connect(_on_pit_clicked.bind(i + 7))
-	pit_buttons.append(player1_store)
-
-	for button in pit_buttons:
-		print(button.name)
 
 
 func _on_pit_clicked(pit_index: int):
@@ -67,8 +65,6 @@ func _on_pit_clicked(pit_index: int):
 	
 	if check_game_over():
 		end_game()
-	else:
-		switch_player()
 
 func is_valid_move(pit_index: int) -> bool:
 	# Check if it's the current player's pit and has seeds
@@ -170,17 +166,16 @@ func end_game():
 
 func update_display():
 	# Update pit buttons
-	for i in range(7, 13):
-		var button_index = i - 1  # Adjust for pit_buttons array
-		if button_index < pit_buttons.size():
-			pit_buttons[button_index].text = str(board[i])
-			pit_buttons[button_index].disabled = game_over or current_player != Player.PLAYER_1 or board[i] == 0
-	
+	# Player 2 pits (0-5)
 	for i in range(6):
-		if i < pit_buttons.size():
-			pit_buttons[i].text = str(board[i])
-			pit_buttons[i].disabled = game_over or current_player != Player.PLAYER_2 or board[i] == 0
-	
+		pit_buttons[i].text = str(board[i])
+		pit_buttons[i].disabled = game_over or current_player != Player.PLAYER_2 or board[i] == 0
+
+	# Player 1 pits (7-12)
+	for i in range(7, 13):
+		pit_buttons[i].text = str(board[i])
+		pit_buttons[i].disabled = game_over or current_player != Player.PLAYER_1 or board[i] == 0
+
 	# Update stores
 	player1_store.text = "P1 Store: " + str(board[13])
 	player2_store.text = "P2 Store: " + str(board[6])

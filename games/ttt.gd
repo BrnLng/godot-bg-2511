@@ -12,7 +12,7 @@ func _ready():
 func setup_game():
 	for i in range(grid_container.get_child_count()):
 		var button = grid_container.get_child(i) as TicTacToeButton
-		print(button.name)
+		# print(button.name)
 		if button:
 			button.cell_index = i
 			button.cell_clicked.connect(_on_cell_clicked)
