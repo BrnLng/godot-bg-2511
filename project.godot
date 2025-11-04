@@ -15,6 +15,10 @@ run/main_scene="uid://yq803y5kqwgm"
 config/features=PackedStringArray("4.5")
 config/icon="res://icon.svg"
 
+[autoload]
+
+TurnManager="*res://base_managers/turn_manager.gd"
+
 [display]
 
 window/size/viewport_width=800

@@ -1,0 +1,112 @@
+[gd_scene load_steps=2 format=3 uid="uid://c15gpin4ksnge"]
+
+[ext_resource type="Script" uid="uid://b7bdui02dh03b" path="res://games/mancala.gd" id="1_gmrn4"]
+
+[node name="G-Mancala" type="Node2D"]
+script = ExtResource("1_gmrn4")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 128
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 256
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="P1Store" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+disabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="PitTopContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="PitTop1" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitTop2" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitTop3" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitTop4" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitTop5" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitTop6" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottomContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+
+[node name="PitBottom1" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottom2" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottom3" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottom4" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottom5" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PitBottom6" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="P2Store" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.25
+disabled = true
+
+[node name="StatusLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "results"
+horizontal_alignment = 1

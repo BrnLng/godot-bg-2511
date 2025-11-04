@@ -1,8 +1,5 @@
-extends Node2D
+extends GameBase
 
-enum Player { PLAYER_1, PLAYER_2 }
-
-var current_player: Player = Player.PLAYER_1
 var board: Array[int] = []
 var game_over: bool = false
 
@@ -13,6 +10,7 @@ var game_over: bool = false
 var pit_buttons: Array[Button] = []
 
 func _ready():
+	TurnManager.turn_passed.connect(_on_turn_passed)
 	initialize_game()
 	setup_buttons()
 	update_display()
@@ -97,7 +95,7 @@ func make_move(pit_index: int):
 	# Check if last seed landed in own store (extra turn)
 	var own_store = 13 if current_player == Player.PLAYER_1 else 6
 	if current_pit != own_store:
-		switch_player()
+		TurnManager.pass_next()  # switch_player()
 
 func check_capture(last_pit: int):
 	# Only capture if last seed landed in own empty pit
@@ -120,7 +118,7 @@ func check_capture(last_pit: int):
 		board[last_pit] = 0
 		board[opposite_pit] = 0
 
-func switch_player():
+func _on_turn_passed() -> void:  # switch_player():
 	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
 
 func check_game_over() -> bool:

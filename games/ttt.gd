@@ -1,25 +1,27 @@
-extends Node2D
-#extends Control
+extends GameBase
 
 @onready var grid_container = %TTTGridContainer
 var buttons: Array[TicTacToeButton] = []
-var current_player: TicTacToeButton.CellState = TicTacToeButton.CellState.PLAYER_1
+# var current_player: TicTacToeButton.CellState = TicTacToeButton.CellState.PLAYER_1
 var game_over: bool = false
 
 func _ready():
+	TurnManager.turn_passed.connect(_on_turn_passed)
 	setup_game()
 
 func setup_game():
 	for i in range(grid_container.get_child_count()):
 		var button = grid_container.get_child(i) as TicTacToeButton
-		# print(button.name)
 		if button:
 			button.cell_index = i
 			button.cell_clicked.connect(_on_cell_clicked)
 			buttons.append(button)
+	current_player = Player.PLAYER_1
 
 func _on_cell_clicked(index: int):
-	if game_over or buttons[index].cell_state != TicTacToeButton.CellState.INIT:
+	if game_over or buttons[index].cell_state != Player.NONE \
+		or index < 0 or index >= len(buttons):
+		print("Invalid move")
 		return
 	
 	buttons[index].set_state(current_player)
@@ -32,7 +34,7 @@ func _on_cell_clicked(index: int):
 		game_over = true
 		print("It's a draw!")
 	else:
-		switch_player()
+		TurnManager.pass_next()
 
 func check_winner() -> bool:
 	var winning_combinations = [
@@ -43,7 +45,7 @@ func check_winner() -> bool:
 	
 	for combo in winning_combinations:
 		var first_state = buttons[combo[0]].cell_state
-		if first_state != TicTacToeButton.CellState.INIT and \
+		if first_state != Player.NONE and \
 		   first_state == buttons[combo[1]].cell_state and \
 		   first_state == buttons[combo[2]].cell_state:
 			return true
@@ -52,21 +54,21 @@ func check_winner() -> bool:
 
 func is_board_full() -> bool:
 	for button in buttons:
-		if button.cell_state == TicTacToeButton.CellState.INIT:
+		if button.cell_state == Player.NONE:
 			return false
 	return true
 
-func switch_player():
-	current_player = TicTacToeButton.CellState.PLAYER_2 if current_player == TicTacToeButton.CellState.PLAYER_1 else TicTacToeButton.CellState.PLAYER_1
+func _on_turn_passed() -> void:
+	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
 
 func disable_all_buttons():
 	for button in buttons:
-		if button.cell_state == TicTacToeButton.CellState.INIT:
+		if button.cell_state == Player.NONE:
 			button.disabled = true
 
 func reset_game():
 	game_over = false
-	current_player = TicTacToeButton.CellState.PLAYER_1
+	current_player = Player.PLAYER_1
 	
 	for button in buttons:
 		button.reset()
