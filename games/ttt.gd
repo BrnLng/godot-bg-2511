@@ -1,34 +1,45 @@
 extends GameBase
 
 @onready var grid_container = %TTTGridContainer
-var buttons: Array[TicTacToeButton] = []
-# var current_player: TicTacToeButton.CellState = TicTacToeButton.CellState.PLAYER_1
+var tiles: Array[TileComponent] = []
 var game_over: bool = false
 
+var grid_size: int = 3
+
+
 func _ready():
-	TurnManager.turn_passed.connect(_on_turn_passed)
 	setup_game()
 
 func setup_game():
-	for i in range(grid_container.get_child_count()):
-		var button = grid_container.get_child(i) as TicTacToeButton
-		if button:
-			button.cell_index = i
-			button.cell_clicked.connect(_on_cell_clicked)
-			buttons.append(button)
+	TurnManager.turn_passed.connect(_on_turn_passed)
 	current_player = Player.PLAYER_1
+	grid_container.columns = grid_size
+	for i in range(grid_size * grid_size):
+		var tile = TileComponent.new()
+		if tile:
+			tile.region_index = i
+			tile.is_clicked.connect(_on_tile_clicked)
+			tiles.append(tile)
+		grid_container.add_child(tile)
 
-func _on_cell_clicked(index: int):
-	if game_over or buttons[index].cell_state != Player.NONE \
-		or index < 0 or index >= len(buttons):
+func _on_tile_clicked(index: int):
+	if game_over or tiles[index].player_owner != Player.NONE \
+		or index < 0 or index >= len(tiles):
 		print("Invalid move")
 		return
 	
-	buttons[index].set_state(current_player)
+	tiles[index].set_player_owner(current_player)
+	match tiles[index].player_owner:
+		GameBase.Player.PLAYER_1:
+			tiles[index].text = "x"
+			tiles[index].disabled = true
+		GameBase.Player.PLAYER_2:
+			tiles[index].text = "o"
+			tiles[index].disabled = true
 	
 	if check_winner():
 		game_over = true
-		disable_all_buttons()
+		disable_all_tiles()
 		print("Player ", current_player, " wins!")
 	elif is_board_full():
 		game_over = true
@@ -44,53 +55,31 @@ func check_winner() -> bool:
 	]
 	
 	for combo in winning_combinations:
-		var first_state = buttons[combo[0]].cell_state
+		var first_state = tiles[combo[0]].player_owner
 		if first_state != Player.NONE and \
-		   first_state == buttons[combo[1]].cell_state and \
-		   first_state == buttons[combo[2]].cell_state:
+		   first_state == tiles[combo[1]].player_owner and \
+		   first_state == tiles[combo[2]].player_owner:
 			return true
 	
 	return false
 
 func is_board_full() -> bool:
-	for button in buttons:
-		if button.cell_state == Player.NONE:
+	for tile in tiles:
+		if tile.player_owner == Player.NONE:
 			return false
 	return true
 
 func _on_turn_passed() -> void:
 	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
 
-func disable_all_buttons():
-	for button in buttons:
-		if button.cell_state == Player.NONE:
-			button.disabled = true
+func disable_all_tiles():
+	for tile in tiles:
+		if tile.player_owner == Player.NONE:
+			tile.disabled = true
 
 func reset_game():
 	game_over = false
 	current_player = Player.PLAYER_1
 	
-	for button in buttons:
-		button.reset()
-
-# old code
-#@onready var button_1: Button = %Button1
-#@onready var button_2: Button = %Button2
-#@onready var button_3: Button = %Button3
-#@onready var button_4: Button = %Button4
-#@onready var button_5: Button = %Button5
-#@onready var button_6: Button = %Button6
-#@onready var button_7: Button = %Button7
-#@onready var button_8: Button = %Button8
-#@onready var button_9: Button = %Button9
-#
-#
-#func _ready() -> void:
-	#var c = 1
-	#for cell in get_tree().get_nodes_in_group("available_cell"):
-		#cell.pressed.connect(_on_cell_selected.bind(c))
-		#c += 1
-#
-#
-#func _on_cell_selected(pos) -> void:
-	#print("cell selected: ", pos)
+	for tile in tiles:
+		tile.reset()
