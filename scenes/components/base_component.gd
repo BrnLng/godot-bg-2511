@@ -1,7 +1,7 @@
 class_name BaseComponent
 extends Button
 
-var player_owner := GameBase.Player.NONE : set=set_player_owner, get=get_player_owner
+var player_owner := GameBase.PlayerRef.NONE : set=set_player_owner, get=get_player_owner
 var region_index: int = -1 : set=set_region_index, get=get_region_index
 
 signal is_clicked(index: int)
@@ -18,11 +18,11 @@ func _on_pressed():
 	is_clicked.emit(region_index)
 
 
-func set_player_owner(new_owner: GameBase.Player) -> void:
+func set_player_owner(new_owner: GameBase.PlayerRef) -> void:
 	player_owner = new_owner
 
 
-func get_player_owner() -> GameBase.Player:
+func get_player_owner() -> GameBase.PlayerRef:
 	return player_owner
 
 
@@ -35,6 +35,6 @@ func get_region_index() -> int:
 
 
 func reset():
-	set_player_owner(GameBase.Player.NONE)
+	set_player_owner(GameBase.PlayerRef.NONE)
 	disabled = false
 	text = ""

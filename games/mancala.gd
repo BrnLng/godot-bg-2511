@@ -12,19 +12,11 @@ var seeds_count: Array[int] = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 const P2STORE = 6
 const P1STORE = 13
 var pit_tiles: Array[TileComponent] = []
-var game_over: bool = false
 
 
 func _ready():
-	initialize_game()
 	setup_buttons()
 	update_display()
-
-
-func initialize_game():
-	TurnManager.turn_passed.connect(_on_turn_passed)
-	current_player = Player.PLAYER_1
-	game_over = false
 
 
 func setup_buttons():
@@ -55,21 +47,21 @@ func setup_buttons():
 
 
 func _on_pit_clicked(pit_index: int):
-	if game_over or not is_valid_move(pit_index):
+	if is_game_over or not is_valid_move(pit_index):
 		return
 	
 	make_move(pit_index)
 	update_display()
 	
-	if check_game_over():
+	if check_empty_pit_row():
 		end_game()
 
 
 func is_valid_move(pit_index: int) -> bool:
 	# Check if it's the current player's pit and has seeds
-	if current_player == Player.PLAYER_2:
+	if current_player == PlayerRef.PLAYER_2:
 		return pit_index >= 0 and pit_index <= 5 and seeds_count[pit_index] > 0
-	else:
+	else:  # PlayerRef.PLAYER_1:
 		return pit_index >= 7 and pit_index <= 12 and seeds_count[pit_index] > 0
 
 
@@ -84,8 +76,8 @@ func make_move(pit_index: int):
 		current_pit = (current_pit + 1) % 14
 		
 		# Skip opponent's store
-		if (current_player == Player.PLAYER_1 and current_pit == P2STORE) or \
-		   (current_player == Player.PLAYER_2 and current_pit == P1STORE):
+		if (current_player == PlayerRef.PLAYER_1 and current_pit == P2STORE) or \
+		   (current_player == PlayerRef.PLAYER_2 and current_pit == P1STORE):
 			continue
 		
 		seeds_count[current_pit] += 1
@@ -95,9 +87,9 @@ func make_move(pit_index: int):
 	check_capture(current_pit)
 	
 	# Check if last seed landed in own store (extra turn)
-	var own_store = P1STORE if current_player == Player.PLAYER_1 else P2STORE
+	var own_store = P1STORE if current_player == PlayerRef.PLAYER_1 else P2STORE
 	if current_pit != own_store:
-		TurnManager.pass_next()
+		pass_turn()
 
 
 func check_capture(last_pit: int):
@@ -106,9 +98,9 @@ func check_capture(last_pit: int):
 		return
 	
 	var own_store: int
-	if current_player == Player.PLAYER_2 and last_pit >= 0 and last_pit <= 5:
+	if current_player == PlayerRef.PLAYER_2 and last_pit >= 0 and last_pit <= 5:
 		own_store = P2STORE
-	elif current_player == Player.PLAYER_1 and last_pit >= 7 and last_pit <= 12:
+	elif current_player == PlayerRef.PLAYER_1 and last_pit >= 7 and last_pit <= 12:
 		own_store = P1STORE
 	else:
 		return
@@ -121,11 +113,7 @@ func check_capture(last_pit: int):
 		seeds_count[opposite_pit] = 0
 
 
-func _on_turn_passed() -> void:  # switch_player():
-	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
-
-
-func check_game_over() -> bool:
+func check_empty_pit_row() -> bool:
 	var player1_empty = true
 	var player2_empty = true
 	
@@ -145,7 +133,7 @@ func check_game_over() -> bool:
 
 
 func end_game():
-	game_over = true
+	is_game_over = true
 	
 	# Move remaining seeds to respective stores
 	for i in range(6):
@@ -175,23 +163,23 @@ func update_display():
 	# Player 2 pits (0-5)
 	for i in range(6):
 		pit_tiles[i].text = str(seeds_count[i])
-		pit_tiles[i].disabled = game_over or current_player != Player.PLAYER_2 or seeds_count[i] == 0
+		pit_tiles[i].disabled = is_game_over or current_player != PlayerRef.PLAYER_2 or seeds_count[i] == 0
 
 	# Player 1 pits (7-12)
 	for i in range(7, 13):
 		pit_tiles[i].text = str(seeds_count[i])
-		pit_tiles[i].disabled = game_over or current_player != Player.PLAYER_1 or seeds_count[i] == 0
+		pit_tiles[i].disabled = is_game_over or current_player != PlayerRef.PLAYER_1 or seeds_count[i] == 0
 
 	# Update stores
 	player1_pit_store.text = "P1 Store:\n" + str(seeds_count[P1STORE])
 	player2_pit_store.text = "P2 Store:\n" + str(seeds_count[P2STORE])
 	
 	# Update status
-	if not game_over:
-		var player_name = "Player 1" if current_player == Player.PLAYER_1 else "Player 2"
+	if not is_game_over:
+		var player_name = "Player 1" if current_player == PlayerRef.PLAYER_1 else "Player 2"
 		status_label.text = player_name + "'s Turn"
 
 
 func _on_restart_pressed():
-	initialize_game()
+	reset_game()
 	update_display()

@@ -8,11 +8,9 @@ var grid_size: int = 3
 
 
 func _ready():
-	setup_game()
+	setup_grid()
 
-func setup_game():
-	TurnManager.turn_passed.connect(_on_turn_passed)
-	current_player = Player.PLAYER_1
+func setup_grid():
 	grid_container.columns = grid_size
 	for i in range(grid_size * grid_size):
 		var tile = TileComponent.new()
@@ -23,17 +21,17 @@ func setup_game():
 		grid_container.add_child(tile)
 
 func _on_tile_clicked(index: int):
-	if game_over or tiles[index].player_owner != Player.NONE \
+	if is_game_over or tiles[index].player_owner != PlayerRef.NONE \
 		or index < 0 or index >= len(tiles):
 		print("Invalid move")
 		return
 	
 	tiles[index].set_player_owner(current_player)
 	match tiles[index].player_owner:
-		GameBase.Player.PLAYER_1:
+		PlayerRef.PLAYER_1:
 			tiles[index].text = "x"
 			tiles[index].disabled = true
-		GameBase.Player.PLAYER_2:
+		PlayerRef.PLAYER_2:
 			tiles[index].text = "o"
 			tiles[index].disabled = true
 	
@@ -48,6 +46,10 @@ func _on_tile_clicked(index: int):
 		TurnManager.pass_next()
 
 func check_winner() -> bool:
+	if grid_size != 3:
+		print("Invalid grid size")  # TODO: Handle this by making winning_combinations dynamic
+		return false
+	
 	var winning_combinations = [
 		[0, 1, 2], [3, 4, 5], [6, 7, 8],  # Rows
 		[0, 3, 6], [1, 4, 7], [2, 5, 8],  # Columns
@@ -56,7 +58,7 @@ func check_winner() -> bool:
 	
 	for combo in winning_combinations:
 		var first_state = tiles[combo[0]].player_owner
-		if first_state != Player.NONE and \
+		if first_state != PlayerRef.NONE and \
 		   first_state == tiles[combo[1]].player_owner and \
 		   first_state == tiles[combo[2]].player_owner:
 			return true
@@ -65,21 +67,20 @@ func check_winner() -> bool:
 
 func is_board_full() -> bool:
 	for tile in tiles:
-		if tile.player_owner == Player.NONE:
+		if tile.player_owner == PlayerRef.NONE:
 			return false
 	return true
 
 func _on_turn_passed() -> void:
-	current_player = Player.PLAYER_2 if current_player == Player.PLAYER_1 else Player.PLAYER_1
+	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
 
 func disable_all_tiles():
 	for tile in tiles:
-		if tile.player_owner == Player.NONE:
-			tile.disabled = true
+		# if tile.player_owner == PlayerRef.NONE:
+		tile.disabled = true
 
 func reset_game():
-	game_over = false
-	current_player = Player.PLAYER_1
+	super.reset_game()
 	
 	for tile in tiles:
 		tile.reset()
