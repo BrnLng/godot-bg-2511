@@ -8,6 +8,7 @@ var grid_size: int = 3
 
 
 func _ready():
+	super._ready()
 	setup_grid()
 
 func setup_grid():

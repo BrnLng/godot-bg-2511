@@ -15,6 +15,7 @@ var pit_tiles: Array[TileComponent] = []
 
 
 func _ready():
+	super._ready()
 	setup_buttons()
 	update_display()
 
