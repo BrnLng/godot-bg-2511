@@ -8,10 +8,10 @@ var player_owner := GameBase.PlayerRef.NONE : set=_set_player_owner, get=_get_pl
 
 func _ready():
 	custom_minimum_size = GRID_SLOT_MIN_SIZE
-	_reset_game()
+	_reset_slot()
 
 
-func _reset_game():
+func _reset_slot():
 	_set_player_owner(GameBase.PlayerRef.NONE)
 	disabled = false
 	text = ""

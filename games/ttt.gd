@@ -1,7 +1,7 @@
 extends GameBase
 
 @onready var grid_container = %TTTGridContainer
-var tiles: Array[TileComponent] = []
+var tiles: Array[GridSlotIndexedRegion] = []
 var game_over: bool = false
 
 var grid_size: int = 3
@@ -14,7 +14,7 @@ func _ready():
 func setup_grid():
 	grid_container.columns = grid_size
 	for i in range(grid_size * grid_size):
-		var tile = TileComponent.new()
+		var tile = GridSlotIndexedRegion.new()
 		if tile:
 			tile.region_index = i
 			tile.is_clicked.connect(_on_tile_clicked)
@@ -80,8 +80,8 @@ func disable_all_tiles():
 		# if tile.player_owner == PlayerRef.NONE:
 		tile.disabled = true
 
-func reset_game():
-	super.reset_game()
+func _reset_game():
+	super._reset_game()
 	
 	for tile in tiles:
 		tile.reset()
