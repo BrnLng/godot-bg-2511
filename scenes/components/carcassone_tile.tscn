@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6g6lastox06f"]
+
+[ext_resource type="Script" uid="uid://qu6lfb6gtaxj" path="res://scenes/components/region_grid_slot_positioned.gd" id="1_31ghw"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pdh2p"]
+size = Vector2(32, 32)
+
+[node name="CarcassoneTile" type="Button"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_icons/icon = SubResource("PlaceholderTexture2D_pdh2p")
+text = "Left"
+alignment = 0
+icon_alignment = 1
+vertical_icon_alignment = 0
+script = ExtResource("1_31ghw")

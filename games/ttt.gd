@@ -2,7 +2,6 @@ extends GameBase
 
 @onready var grid_container = %TTTGridContainer
 var tiles: Array[GridSlotIndexedRegion] = []
-var game_over: bool = false
 
 var grid_size: int = 3
 
@@ -17,7 +16,7 @@ func setup_grid():
 		var tile = GridSlotIndexedRegion.new()
 		if tile:
 			tile.region_index = i
-			tile.is_clicked.connect(_on_tile_clicked)
+			tile.on_clicked.connect(_on_tile_clicked)
 			tiles.append(tile)
 		grid_container.add_child(tile)
 
@@ -27,7 +26,7 @@ func _on_tile_clicked(index: int):
 		print("Invalid move")
 		return
 	
-	tiles[index].set_player_owner(current_player)
+	tiles[index].player_owner = current_player
 	match tiles[index].player_owner:
 		PlayerRef.PLAYER_1:
 			tiles[index].text = "x"
@@ -37,11 +36,11 @@ func _on_tile_clicked(index: int):
 			tiles[index].disabled = true
 	
 	if check_winner():
-		game_over = true
+		is_game_over = true
 		disable_all_tiles()
 		print("Player ", current_player, " wins!")
 	elif is_board_full():
-		game_over = true
+		is_game_over = true
 		print("It's a draw!")
 	else:
 		TurnManager.pass_next()
