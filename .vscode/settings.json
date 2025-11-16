@@ -1,3 +1,13 @@
 {
-    "godotTools.editorPath.godot4": "/home/brnlng/Godot_v451"
+    "godotTools.editorPath.godot4": "/home/brnlng/Godot_v451",
+
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/lx": true,
+    },
 }
