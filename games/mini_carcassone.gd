@@ -85,8 +85,8 @@ func disable_all_tiles():
 		# if tile.player_owner == PlayerRef.NONE:
 		tiles[tile_index].disabled = true
 
-func _reset_game():
-	super._reset_game()
+func reset_game():
+	super.reset_game()
 	
 	for tile_index in tiles.keys():
 		tiles[tile_index]._reset_slot()

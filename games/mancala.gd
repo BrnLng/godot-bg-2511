@@ -1,7 +1,7 @@
 extends GameBase
 
-@onready var player1_pit_store: Button = %P1Store as TileComponent
-@onready var player2_pit_store: Button = %P2Store as TileComponent
+@onready var player1_pit_store: Button = %P1Store as GridSlotIndexedRegion
+@onready var player2_pit_store: Button = %P2Store as GridSlotIndexedRegion
 @onready var status_label: Label = %StatusLabel
 
 # loop path board: 6 pits per player + 2 stores -- running anti-clockwise.
@@ -11,7 +11,7 @@ extends GameBase
 var seeds_count: Array[int] = [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0]
 const P2STORE = 6
 const P1STORE = 13
-var pit_tiles: Array[TileComponent] = []
+var pit_tiles: Array[GridSlotIndexedRegion] = []
 
 
 func _ready():
@@ -31,20 +31,20 @@ func setup_buttons():
 	player2_pit_store.region_index = P2STORE
 	pit_tiles[P2STORE] = player2_pit_store
 	for i in range(6):
-		var tile = player2_pits_container.get_child(i) as TileComponent
+		var tile = player2_pits_container.get_child(i) as GridSlotIndexedRegion
 		tile.region_index = i
 		pit_tiles[i] = tile
-		tile.is_clicked.connect(_on_pit_clicked)
+		tile.on_clicked.connect(_on_pit_clicked)
 	
 	# Player 1 pits (indices 7-12, but buttons are in reverse order)
 	player1_pit_store.region_index = P1STORE
 	pit_tiles[P1STORE] = player1_pit_store
 	for i in range(6):
-		var tile = player1_pits_container.get_child(5-i) as TileComponent
+		var tile = player1_pits_container.get_child(5-i) as GridSlotIndexedRegion
 		var board_index = i + 7
 		tile.region_index = board_index
 		pit_tiles[board_index] = tile
-		tile.is_clicked.connect(_on_pit_clicked)
+		tile.on_clicked.connect(_on_pit_clicked)
 
 
 func _on_pit_clicked(pit_index: int):

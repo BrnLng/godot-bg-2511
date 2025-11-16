@@ -17,3 +17,6 @@ mono_crash.*.json
 
 # Other tools
 .vscode/
+
+# local dev quirks
+games/lx/

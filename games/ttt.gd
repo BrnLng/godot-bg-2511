@@ -38,7 +38,7 @@ func _on_tile_clicked(index: int):
 	if check_winner():
 		is_game_over = true
 		disable_all_tiles()
-		print("Player ", current_player, " wins!")
+		print("Player ", last_player, " wins!")
 	elif is_board_full():
 		is_game_over = true
 		print("It's a draw!")
@@ -79,8 +79,8 @@ func disable_all_tiles():
 		# if tile.player_owner == PlayerRef.NONE:
 		tile.disabled = true
 
-func _reset_game():
-	super._reset_game()
+func reset_game():
+	super.reset_game()
 	
 	for tile in tiles:
 		tile.reset()

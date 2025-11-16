@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c15gpin4ksnge"]
 
 [ext_resource type="Script" uid="uid://b7bdui02dh03b" path="res://games/mancala.gd" id="1_gmrn4"]
-[ext_resource type="Script" uid="uid://cp1b4e3mxk81i" path="res://scenes/components/component_tile.gd" id="2_pico2"]
+[ext_resource type="Script" uid="uid://b70rye5nqw0js" path="res://scenes/components/region_grid_slot_indexed.gd" id="2_pico2"]
 
 [node name="G-Mancala" type="Node2D"]
 script = ExtResource("1_gmrn4")
@@ -34,7 +34,6 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 disabled = true
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -51,37 +50,31 @@ theme_override_constants/separation = 18
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitTop2" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitTop3" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitTop4" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitTop5" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitTop6" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitTopContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottomContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
@@ -93,37 +86,31 @@ theme_override_constants/separation = 18
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottom2" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottom3" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottom4" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottom5" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="PitBottom6" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/PitBottomContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="P2Store" type="Button" parent="CanvasLayer/VBoxContainer/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
@@ -132,7 +119,6 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.25
 disabled = true
 script = ExtResource("2_pico2")
-metadata/_custom_type_script = "uid://cp1b4e3mxk81i"
 
 [node name="StatusLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
