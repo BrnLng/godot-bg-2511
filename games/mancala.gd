@@ -2,7 +2,7 @@ extends GameBase
 
 @onready var player1_pit_store: Button = %P1Store as GridSlotIndexedRegion
 @onready var player2_pit_store: Button = %P2Store as GridSlotIndexedRegion
-@onready var status_label: Label = %StatusLabel
+# @onready var status_label: Label = %StatusLabel
 
 # loop path board: 6 pits per player + 2 stores -- running anti-clockwise.
 # Index 0 starting at Player 2's bottom row
@@ -91,6 +91,7 @@ func make_move(pit_index: int):
 	var own_store = P1STORE if current_player == PlayerRef.PLAYER_1 else P2STORE
 	if current_pit != own_store:
 		pass_turn()
+	hud_message("Extra turn for player " + str(current_player) + "!")
 
 
 func check_capture(last_pit: int):
@@ -156,7 +157,7 @@ func end_game():
 	else:
 		winner_text = "It's a Tie!"
 	
-	status_label.text = winner_text
+	hud_message(winner_text)
 
 
 func update_display():
@@ -175,10 +176,10 @@ func update_display():
 	player1_pit_store.text = "P1 Store:\n" + str(seeds_count[P1STORE])
 	player2_pit_store.text = "P2 Store:\n" + str(seeds_count[P2STORE])
 	
-	# Update status
-	if not is_game_over:
-		var player_name = "Player 1" if current_player == PlayerRef.PLAYER_1 else "Player 2"
-		status_label.text = player_name + "'s Turn"
+	# # Update status
+	# if not is_game_over:
+	# 	var player_name = "Player 1" if current_player == PlayerRef.PLAYER_1 else "Player 2"
+	# 	status_label.text = player_name + "'s Turn"
 
 
 func _on_restart_pressed():

@@ -122,6 +122,7 @@ script = ExtResource("2_pico2")
 
 [node name="StatusLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 text = "results"
 horizontal_alignment = 1

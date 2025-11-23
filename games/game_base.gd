@@ -1,13 +1,14 @@
 class_name GameBase
 extends Node2D
 
-signal hud_message(msg:String)
-signal hud_history(msg:String)
-signal hud_panel(item:Node)
+signal _hud_message(msg:String)
+signal _hud_history(msg:String)
+signal _hud_panel(item:Node)
 
 enum PlayerRef { NONE=-1, ANY=0, PLAYER_1=1, PLAYER_2=2 }
 var current_player: PlayerRef : get=get_current_player
 var last_player: PlayerRef : get=get_last_player
+var next_player: PlayerRef : get=get_next_player
 # var players_types: Vector2  # x = Human players, y = Computer
 # var players: Array[int]
 # var player_queue: Array[int]
@@ -24,21 +25,35 @@ func _ready() -> void:
 	# test_msgs()
 
 
-func test_msgs() -> void:
-	hud_message.emit("Testing from game_base._ready()")
-	hud_history.emit("Preparing and testing game")
-	var new_test_label = Label.new()
-	new_test_label.text = "Testing from game_base._ready() new label"
-	hud_panel.emit(new_test_label)
+# func test_msgs() -> void:
+# 	hud_message.emit("Testing from game_base._ready()")
+# 	hud_history.emit("Preparing and testing game")
+# 	var new_test_label = Label.new()
+# 	new_test_label.text = "Testing from game_base._ready() new label"
+# 	hud_panel.emit(new_test_label)
 
 
 func _initialize_base_game() -> void:
 	TurnManager.turn_passed.connect(_on_turn_passed)
+	TurnManager.turn_started.connect(_on_turn_started)
+	# TurnManager.turn_ended.connect(_on_turn_ended)
+	# TurnManager.trigger_phase.connect(_on_trigger_phase)
+	# TurnManager.next_phase.connect(_on_next_phase)
+	# TurnManager.next_round.connect(_on_next_round)
+	# TurnManager.turn_changed.connect(_on_turn_changed)
 	reset_game()
 
 
 func _on_turn_passed() -> void:
 	_switch_player()
+	TurnManager.start_turn()
+
+
+func _on_turn_started() -> void:
+	hud_message("It's Player " + str(current_player) + "'s turn")
+
+
+# func _on_turn_ended() -> void:
 
 
 func _switch_player() -> void:
@@ -49,7 +64,7 @@ func _switch_player() -> void:
 	# current_player = (current_player + 1) % player_count()
 	# current_player = PlayerPresence.PLAYER_2 if current_player == PlayerPresence.PLAYER_1 else PlayerPresence.PLAYER_1
 	last_player = current_player
-	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
+	current_player = get_next_player()
 
 
 func reset_game() -> void:
@@ -63,6 +78,10 @@ func get_current_player() -> PlayerRef:
 
 func get_last_player() -> PlayerRef:
 	return last_player
+
+
+func get_next_player() -> PlayerRef:
+	return PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
 
 
 #func player_count() -> int:
@@ -89,3 +108,15 @@ func pass_turn() -> void:
 
 # func _on_game_ended(player_id, score) -> void:
 # 	scoreboard[score] = player_id
+
+
+func hud_message(msg:String) -> void:
+	_hud_message.emit(msg)
+
+
+func hud_history(msg:String) -> void:
+	_hud_history.emit(msg)
+
+
+func hud_panel_show(item:Node) -> void:
+	_hud_panel.emit(item)

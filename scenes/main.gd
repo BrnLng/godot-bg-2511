@@ -13,11 +13,14 @@ var _game: GameBase
 func _ready() -> void:
 	_game = $GamePlug.get_children()[0] as GameBase
 	if not _game:
-		print("Error: game connect error @ main")
+		print_debug("Error: game connect error @ main")
+	for i in range($GamePlug.get_children().size()-1):
+		$GamePlug.get_children()[i+1].queue_free()
+	
 
-	_game.hud_message.connect(_on_hud_message_update)
-	_game.hud_history.connect(_on_hud_history_update)
-	_game.hud_panel.connect(_on_hud_panel_update)
+	_game._hud_message.connect(_on_hud_message_update)
+	_game._hud_history.connect(_on_hud_history_update)
+	_game._hud_panel.connect(_on_hud_panel_update)
 
 
 func _on_hud_message_update(msg:String) -> void:
@@ -25,7 +28,7 @@ func _on_hud_message_update(msg:String) -> void:
 
 
 func _on_hud_history_update(msg:String) -> void:
-	label_right.text = "[color=DIM_GRAY]" + ("%03d" % history_counter) + ".[/color] " + msg + " \n" + label_right.text
+	label_right.text = "[color=DIM_GRAY]" + ("%03d" % history_counter) + ".[/color] " + msg + "  \n" + label_right.text
 	history_counter += 1
 	# The scrollbar's max_value is not updated in the same frame the label's text is changed.
 	# We need to wait for the next idle frame for the container to resize and update the scrollbar.
