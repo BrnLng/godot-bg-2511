@@ -23,7 +23,7 @@ func setup_grid():
 func _on_tile_clicked(index: int):
 	if is_game_over or tiles[index].player_owner != PlayerRef.NONE \
 		or index < 0 or index >= len(tiles):
-		print("Invalid move")
+		hud_message.emit("Invalid move")
 		return
 	
 	tiles[index].player_owner = current_player
@@ -34,14 +34,20 @@ func _on_tile_clicked(index: int):
 		PlayerRef.PLAYER_2:
 			tiles[index].text = "o"
 			tiles[index].disabled = true
+		
+	var history_string: String = "Player [b]" + str(current_player) + "[/b] played at index [i]" + str(index) + "[/i]"
+	hud_history.emit(history_string)
+
 	
 	if check_winner():
 		is_game_over = true
 		disable_all_tiles()
-		print("Player ", last_player, " wins!")
+		var winning_string : String = "Player " + str(current_player) + " wins!"
+		hud_message.emit(winning_string)
+		# print("Player ", current_st_player, " wins!")
 	elif is_board_full():
 		is_game_over = true
-		print("It's a draw!")
+		hud_message.emit("It's a draw!")
 	else:
 		TurnManager.pass_next()
 
@@ -71,8 +77,8 @@ func is_board_full() -> bool:
 			return false
 	return true
 
-func _on_turn_passed() -> void:
-	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
+# func _on_turn_passed() -> void:
+# 	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
 
 func disable_all_tiles():
 	for tile in tiles:

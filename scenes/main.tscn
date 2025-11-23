@@ -6,7 +6,9 @@
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
 
-[node name="G-TTT" parent="." instance=ExtResource("2_0wfyh")]
+[node name="GamePlug" type="Node2D" parent="."]
+
+[node name="G-TTT" parent="GamePlug" instance=ExtResource("2_0wfyh")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -40,7 +42,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "text panel"
 autowrap_mode = 2
 
 [node name="Panel" type="Panel" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
@@ -59,11 +60,27 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="LabelRight" type="Label" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "text panel"
-horizontal_alignment = 2
+tooltip_text = "Game Descriptive History"
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 4
+scroll_deadzone = 4
+
+[node name="LabelRight" type="RichTextLabel" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer/ScrollContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(196, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 10
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 11
+theme_override_font_sizes/italics_font_size = 12
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
 autowrap_mode = 2
+horizontal_alignment = 2
+vertical_alignment = 2

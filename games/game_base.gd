@@ -5,8 +5,7 @@ signal hud_message(msg:String)
 signal hud_history(msg:String)
 signal hud_panel(item:Node)
 
-enum PlayerRef { NONE=-2, ANY=-1, PLAYER_N=0, PLAYER_1=1, PLAYER_2=2 }
-# enum PlayerPresence { NONE, PLAYER }
+enum PlayerRef { NONE=-1, ANY=0, PLAYER_1=1, PLAYER_2=2 }
 var current_player: PlayerRef : get=get_current_player
 var last_player: PlayerRef : get=get_last_player
 # var players_types: Vector2  # x = Human players, y = Computer
@@ -20,9 +19,9 @@ var is_game_over: bool = false
 func _ready() -> void:
 	# randomize()
 	_initialize_base_game()
-	# await 2 secs to test hud
-	await get_tree().create_timer(2).timeout
-	test_msgs()
+	# # await n sec(s) to test hud
+	# await get_tree().create_timer(1).timeout
+	# test_msgs()
 
 
 func test_msgs() -> void:
@@ -39,16 +38,16 @@ func _initialize_base_game() -> void:
 
 
 func _on_turn_passed() -> void:
+	_switch_player()
+
+
+func _switch_player() -> void:
 	# if player_queue:
 		# player_queue.append(current_player)
 		# current_player = player_queue.pop()
 	# else:
 	# current_player = (current_player + 1) % player_count()
 	# current_player = PlayerPresence.PLAYER_2 if current_player == PlayerPresence.PLAYER_1 else PlayerPresence.PLAYER_1
-	_switch_player()
-
-
-func _switch_player() -> void:
 	last_player = current_player
 	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
 
