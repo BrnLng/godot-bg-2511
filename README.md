@@ -14,4 +14,5 @@ To be a Board Game Framework for rapid prototyping of ideas
 
 ### recently done:
 
+- Added debug bottom panels for current message and descriptive history
 - Testing: Tic Tac Toe, Mancala, Rock Paper Scissors

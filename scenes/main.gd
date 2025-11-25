@@ -1,26 +1,54 @@
 extends  Node2D
 
+# Define an enum for the game choices that will appear in the editor's dropdown.
+enum Game {
+	ROCK_PAPER_SCISSORS,
+	TIC_TAC_TOE,
+	MANCALA,
+	MINI_CARCASSONE,
+}
+
+# Map the enum values to the actual scene file paths.
+const GAME_SCENES = {
+	Game.ROCK_PAPER_SCISSORS: "res://games/01_rock_paper_scissors.tscn",
+	Game.TIC_TAC_TOE: "res://games/02_tic_tac_toe.tscn",
+	Game.MANCALA: "res://games/03_mancala.tscn",
+	Game.MINI_CARCASSONE: "res://games/04_mini_carcassone.tscn",
+}
+
+@export var selected_game: Game = Game.TIC_TAC_TOE
+
 @onready var label_left: Label = %LabelLeft
 @onready var mid_panel: Control = %MidPanel
 @onready var label_right: RichTextLabel = %LabelRight
 # @onready var history_scroll: ScrollContainer = label_right.get_parent() as ScrollContainer
 
 var history_counter: int = 1
-
 var _game: GameBase
 
 
 func _ready() -> void:
-	_game = $GamePlug.get_children()[0] as GameBase
-	if not _game:
-		print_debug("Error: game connect error @ main")
-	for i in range($GamePlug.get_children().size()-1):
-		$GamePlug.get_children()[i+1].queue_free()
+	var game_scene_path = GAME_SCENES.get(selected_game)
+	if not game_scene_path:
+		push_error("No scene path found for the selected game in main.gd!")
+		return
 	
+	var game_scene: PackedScene = load(game_scene_path)
+	if not game_scene:
+		push_error("Failed to load game scene at path: " + game_scene_path)
+		return
+		
+	_game = game_scene.instantiate() as GameBase
+	if not _game:
+		push_error("Instantiated game scene does not have a GameBase root script!")
+		return
 
-	_game._hud_message.connect(_on_hud_message_update)
-	_game._hud_history.connect(_on_hud_history_update)
-	_game._hud_panel.connect(_on_hud_panel_update)
+	$GamePlug.add_child(_game)
+
+	# Now connect the signals from the actual game instance
+	_game._hud_message.connect(self._on_hud_message_update)
+	_game._hud_history.connect(self._on_hud_history_update)
+	_game._hud_panel.connect(self._on_hud_panel_update)
 
 
 func _on_hud_message_update(msg:String) -> void:

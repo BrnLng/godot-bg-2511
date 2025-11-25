@@ -1,17 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://n64cl2lpcgcl"]
 
-[ext_resource type="Script" uid="uid://dg6gh8wyfq4dr" path="res://games/rps.gd" id="1_2ekhc"]
-[ext_resource type="FontFile" uid="uid://cdga3g45r6hw0" path="res://assets/NotoColorEmoji-Regular.ttf" id="2_qsgn8"]
+[ext_resource type="Script" uid="uid://dg6gh8wyfq4dr" path="res://games/01_rock_paper_scissors.gd" id="1_uokcw"]
+[ext_resource type="FontFile" uid="uid://cdga3g45r6hw0" path="res://assets/NotoColorEmoji-Regular.ttf" id="2_f3mmy"]
 
 [node name="G-RPS" type="Node2D"]
-visible = false
-script = ExtResource("1_2ekhc")
+script = ExtResource("1_uokcw")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -65,7 +62,7 @@ size_flags_horizontal = 3
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_qsgn8")
+theme_override_fonts/font = ExtResource("2_f3mmy")
 text = "🪨
 Rock"
 metadata/_edit_use_anchors_ = true
@@ -74,7 +71,7 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_qsgn8")
+theme_override_fonts/font = ExtResource("2_f3mmy")
 text = "📰
 Paper"
 metadata/_edit_use_anchors_ = true
@@ -83,7 +80,7 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_qsgn8")
+theme_override_fonts/font = ExtResource("2_f3mmy")
 text = "✂️
 Scissors"
 metadata/_edit_use_anchors_ = true

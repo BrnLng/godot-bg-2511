@@ -91,7 +91,8 @@ func make_move(pit_index: int):
 	var own_store = P1STORE if current_player == PlayerRef.PLAYER_1 else P2STORE
 	if current_pit != own_store:
 		pass_turn()
-	hud_message("Extra turn for player " + str(current_player) + "!")
+	else:
+		hud_message("Extra turn for player " + str(current_player) + "!")
 
 
 func check_capture(last_pit: int):

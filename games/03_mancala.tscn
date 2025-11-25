@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c15gpin4ksnge"]
 
-[ext_resource type="Script" uid="uid://b7bdui02dh03b" path="res://games/mancala.gd" id="1_gmrn4"]
+[ext_resource type="Script" uid="uid://b7bdui02dh03b" path="res://games/03_mancala.gd" id="1_gmrn4"]
 [ext_resource type="Script" uid="uid://b70rye5nqw0js" path="res://scenes/components/region_grid_slot_indexed.gd" id="2_pico2"]
 
 [node name="G-Mancala" type="Node2D"]

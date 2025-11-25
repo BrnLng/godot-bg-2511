@@ -1,24 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://yq803y5kqwgm"]
+[gd_scene load_steps=2 format=3 uid="uid://yq803y5kqwgm"]
 
 [ext_resource type="Script" uid="uid://cgonuhnyh8bpo" path="res://scenes/main.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://djjglnqt4cjl5" path="res://games/tic_tac_toe.tscn" id="2_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://c15gpin4ksnge" path="res://games/mancala.tscn" id="3_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://n64cl2lpcgcl" path="res://games/rock_paper_scissors.tscn" id="4_tefeu"]
-[ext_resource type="PackedScene" uid="uid://b0rudsvrxaxch" path="res://games/mini_carcassone.tscn" id="5_o6xl0"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
+selected_game = 0
 
 [node name="GamePlug" type="Node2D" parent="."]
-
-[node name="G-Mancala" parent="GamePlug" instance=ExtResource("3_tbgi4")]
-
-[node name="G-TTT" parent="GamePlug" instance=ExtResource("2_0wfyh")]
-
-[node name="G-RPS" parent="GamePlug" instance=ExtResource("4_tefeu")]
-visible = true
-
-[node name="G-MiniCarcassone" parent="GamePlug" instance=ExtResource("5_o6xl0")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

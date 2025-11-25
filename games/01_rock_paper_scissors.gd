@@ -1,4 +1,4 @@
-extends Node2D
+extends GameBase
 
 # Enum to represent the three possible choices in the game.
 # This makes the code more readable and less prone to errors.
