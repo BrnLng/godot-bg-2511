@@ -12,9 +12,11 @@ var computer_score: int = 0
 @onready var result_label: Label = %ResultLabel
 @onready var player_score_label: Label = %PlayerScoreLabel
 @onready var computer_score_label: Label = %ComputerScoreLabel
+
 @onready var rock_button: Button = %RockButton
 @onready var paper_button: Button = %PaperButton
 @onready var scissors_button: Button = %ScissorsButton
+
 @onready var reset_button: Button = %ResetButton
 
 
@@ -26,6 +28,11 @@ func _ready() -> void:
 	paper_button.pressed.connect(func(): _on_player_choice(Choice.PAPER))
 	scissors_button.pressed.connect(func(): _on_player_choice(Choice.SCISSORS))
 	reset_button.pressed.connect(_on_reset_button_pressed)
+
+	var buttons_parent = rock_button.get_parent()
+	buttons_parent.get_parent().remove_child(buttons_parent)
+	call_deferred("hud_panel_show", buttons_parent)
+	#hud_panel_show(buttons_parent)
 	
 	# Initialize the UI with default values.
 	_update_score_ui()

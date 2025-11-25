@@ -71,3 +71,4 @@ func _on_hud_history_update(msg:String) -> void:
 func _on_hud_panel_update(item:Node) -> void:
 	Utils.remove_all_children(mid_panel)
 	mid_panel.add_child(item)
+	print("added item to panel: " + str(item))
