@@ -77,6 +77,8 @@ func _on_reset_button_pressed() -> void:
 	# Reset scores to zero.
 	player_score = 0
 	computer_score = 0
+
+	pass_turn()
 	
 	# Update the UI to reflect the reset scores.
 	_update_score_ui()

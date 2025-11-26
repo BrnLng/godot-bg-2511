@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://yq803y5kqwgm"]
+[gd_scene load_steps=3 format=3 uid="uid://yq803y5kqwgm"]
 
 [ext_resource type="Script" uid="uid://cgonuhnyh8bpo" path="res://scenes/main.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://b8bm1ksdgqjxa" path="res://managers/hud.gd" id="2_0wfyh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
@@ -8,9 +9,10 @@ selected_game = 0
 
 [node name="GamePlug" type="Node2D" parent="."]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("2_0wfyh")
 
-[node name="Panel" type="Panel" parent="CanvasLayer"]
+[node name="Panel" type="Panel" parent="HUD"]
 custom_minimum_size = Vector2(0, 96)
 anchors_preset = 12
 anchor_top = 1.0
@@ -19,7 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="HUD/Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,24 +33,24 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/Panel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="LabelLeft" type="Label" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
+[node name="LabelLeft" type="Label" parent="HUD/Panel/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 autowrap_mode = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
+[node name="Panel" type="Panel" parent="HUD/Panel/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 1.62
 
-[node name="MidPanel" type="MarginContainer" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer/Panel"]
+[node name="MidPanel" type="MarginContainer" parent="HUD/Panel/MarginContainer/HBoxContainer/Panel"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -61,7 +63,7 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HUD/Panel/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(96, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -70,7 +72,7 @@ horizontal_scroll_mode = 0
 vertical_scroll_mode = 4
 scroll_deadzone = 4
 
-[node name="LabelRight" type="RichTextLabel" parent="CanvasLayer/Panel/MarginContainer/HBoxContainer/ScrollContainer"]
+[node name="LabelRight" type="RichTextLabel" parent="HUD/Panel/MarginContainer/HBoxContainer/ScrollContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(196, 0)
 layout_mode = 2
