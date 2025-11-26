@@ -8,12 +8,25 @@ signal turn_started
 # signal next_round
 # signal turn_changed(player_id)
 
+var turn_counter: int = 1
+var _in_turn_counter: int = 0
+var in_turn_counter: String: get=get_in_turn_counter
+
+
+func get_in_turn_counter() -> String:
+	_in_turn_counter += 1
+	if _in_turn_counter < 2:
+		return str(turn_counter)
+	return str(turn_counter) + "." + str(_in_turn_counter)
+
 
 func pass_next() -> void:
+	turn_counter += 1
 	turn_passed.emit()
 
 
 func start_turn() -> void:
+	_in_turn_counter = 0
 	turn_started.emit()
 
 

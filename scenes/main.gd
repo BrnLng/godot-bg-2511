@@ -1,7 +1,7 @@
 extends  Node2D
 
 # Define an enum for the game choices that will appear in the editor's dropdown.
-enum Game {
+enum GameLoaded {
 	ROCK_PAPER_SCISSORS,
 	TIC_TAC_TOE,
 	MANCALA,
@@ -10,20 +10,20 @@ enum Game {
 
 # Map the enum values to the actual scene file paths.
 const GAME_SCENES = {
-	Game.ROCK_PAPER_SCISSORS: "res://games/01_rock_paper_scissors.tscn",
-	Game.TIC_TAC_TOE: "res://games/02_tic_tac_toe.tscn",
-	Game.MANCALA: "res://games/03_mancala.tscn",
-	Game.MINI_CARCASSONE: "res://games/04_mini_carcassone.tscn",
+	GameLoaded.ROCK_PAPER_SCISSORS: "res://games/01_rock_paper_scissors.tscn",
+	GameLoaded.TIC_TAC_TOE: "res://games/02_tic_tac_toe.tscn",
+	GameLoaded.MANCALA: "res://games/03_mancala.tscn",
+	GameLoaded.MINI_CARCASSONE: "res://games/04_mini_carcassone.tscn",
 }
 
-@export var selected_game: Game = Game.TIC_TAC_TOE
+@export var selected_game: GameLoaded = GameLoaded.TIC_TAC_TOE
 
 @onready var label_left: Label = %LabelLeft
 @onready var mid_panel: Control = %MidPanel
 @onready var label_right: RichTextLabel = %LabelRight
 # @onready var history_scroll: ScrollContainer = label_right.get_parent() as ScrollContainer
 
-var history_counter: int = 1
+# var history_counter: int = 1
 var _game: GameBase
 
 
@@ -56,8 +56,9 @@ func _on_hud_message_update(msg:String) -> void:
 
 
 func _on_hud_history_update(msg:String) -> void:
-	label_right.text = "[color=DIM_GRAY]" + ("%03d" % history_counter) + ".[/color] " + msg + "  \n" + label_right.text
-	history_counter += 1
+	label_right.text = "[color=DIM_GRAY]" + TurnManager.in_turn_counter + ".[/color] " + msg + "  \n" + label_right.text
+	# label_right.text = "[color=DIM_GRAY]" + ("%03d" % history_counter) + ".[/color] " + msg + "  \n" + label_right.text
+	# history_counter += 1
 	# The scrollbar's max_value is not updated in the same frame the label's text is changed.
 	# We need to wait for the next idle frame for the container to resize and update the scrollbar.
 	# call_deferred("_scroll_history_to_bottom")

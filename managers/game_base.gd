@@ -15,22 +15,32 @@ var next_player: PlayerRef : get=get_next_player
 # var scoreboard: Dictionary
 # signal game_ended(winner, score)
 var is_game_over: bool = false
+var game_counter: int = 1
+var last_best_threshold: int = 1
+var game_results: Vector2i = Vector2i.ZERO
 
 
 func _ready() -> void:
-	# randomize()
+	# TODO: add randomize() some time later with fixed seed option
 	_initialize_base_game()
-	# # await n sec(s) to test hud
-	# await get_tree().create_timer(1).timeout
-	# test_msgs()
 
 
-# func test_msgs() -> void:
-# 	hud_message.emit("Testing from game_base._ready()")
-# 	hud_history.emit("Preparing and testing game")
-# 	var new_test_label = Label.new()
-# 	new_test_label.text = "Testing from game_base._ready() new label"
-# 	hud_panel.emit(new_test_label)
+func get_game_round_best_of(score_a, score_b) -> String:
+	# Determine the highest score to calculate the current "best of" series.
+	var max_score_reached = max(score_a, score_b)
+	var scores_added = score_a + score_b
+	# The number of wins needed is one or two more than the current max score.
+	# The "best of" threshold is always an odd number, calculated as 2 * wins_needed - 1.
+	var cur_best_threshold = max_score_reached + 2 if \
+		( (max_score_reached != 0) or (scores_added - max_score_reached > 1) ) else 1
+	# var cur_best_threshold = 2 * wins_needed - 1
+
+	if last_best_threshold != cur_best_threshold:
+		game_counter += 1
+		game_results = Vector2i(score_a, score_b)
+		last_best_threshold = cur_best_threshold
+
+	return "(%d x %d) in best of %d" % [game_results.x, game_results.y, cur_best_threshold]
 
 
 func _initialize_base_game() -> void:
