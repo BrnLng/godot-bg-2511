@@ -2,7 +2,7 @@ extends Node
 
 signal turn_passed
 signal turn_started
-# signal turn_ended
+signal turn_ended
 # signal trigger_phase
 # signal next_phase
 # signal next_round
@@ -14,15 +14,19 @@ var in_turn_counter: String: get=get_in_turn_counter
 
 
 func get_in_turn_counter() -> String:
+	var base_counter = "%02d" % turn_counter
 	_in_turn_counter += 1
 	if _in_turn_counter < 2:
-		return str(turn_counter)
-	return str(turn_counter) + "." + str(_in_turn_counter)
+		return str(base_counter)
+	return base_counter + "." + "%02d" % _in_turn_counter
 
 
-func pass_next() -> void:
-	turn_counter += 1
+func pass_next(manage_turn_end:Script=null) -> void:
 	turn_passed.emit()
+	if manage_turn_end:
+		await manage_turn_end.process()  # TODO: implement this
+		end_turn()
+	turn_counter += 1
 
 
 func start_turn() -> void:
@@ -30,8 +34,8 @@ func start_turn() -> void:
 	turn_started.emit()
 
 
-# func end_turn() -> void:
-# 	turn_ended.emit()
+func end_turn() -> void:
+	turn_ended.emit()
 
 
 # func trigger_next_phase() -> void:

@@ -1,14 +1,11 @@
 extends  Node2D
 
-# Define an enum for the game choices that will appear in the editor's dropdown.
 enum GameLoaded {
 	ROCK_PAPER_SCISSORS,
 	TIC_TAC_TOE,
 	MANCALA,
 	MINI_CARCASSONE,
 }
-
-# Map the enum values to the actual scene file paths.
 const GAME_SCENES = {
 	GameLoaded.ROCK_PAPER_SCISSORS: "res://games/01_rock_paper_scissors.tscn",
 	GameLoaded.TIC_TAC_TOE: "res://games/02_tic_tac_toe.tscn",
@@ -18,10 +15,9 @@ const GAME_SCENES = {
 
 @export var selected_game: GameLoaded = GameLoaded.TIC_TAC_TOE
 
-# var history_counter: int = 1
-var _game: GameBase
-
 @onready var _hud: CanvasLayer = $HUD
+
+var _game: GameBase
 
 
 func _ready() -> void:
@@ -42,7 +38,6 @@ func _ready() -> void:
 
 	$GamePlug.add_child(_game)
 
-	# Now connect the signals from the actual game instance
-	_game._hud_message.connect(_hud._on_hud_message_update)
-	_game._hud_history.connect(_hud._on_hud_history_update)
-	_game._hud_panel.connect(_hud._on_hud_panel_update)
+	_game._show_message.connect(_hud.on_hud_message_update)
+	_game._add_history.connect(_hud.on_hud_history_update)
+	_game._to_panel_item.connect(_hud.on_hud_panel_update)
