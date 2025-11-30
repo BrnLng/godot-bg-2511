@@ -10,7 +10,7 @@ func on_hud_message_update(msg:String) -> void:
 
 
 func on_hud_history_update(msg:String) -> void:
-	# TODO: pending optimization with using append_text to prepend, to not parse all bbcode every change
+	# TODO: pending optimization: using append_text to prepend, to not parse all bbcode every change
 	# label_right.append_text("[color=DIM_GRAY]" + TurnManager.in_turn_counter + ".[/color] " + msg + "  \n")  # last space before \n is for getting out of scrollbar
 	label_right.text = "[color=DIM_GRAY]" + TurnManager.in_turn_counter + ".[/color] " + msg + \
 		"  \n" + label_right.text  # last space before \n is for getting out of scrollbar

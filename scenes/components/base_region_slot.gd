@@ -1,4 +1,4 @@
-class_name BaseSlot
+@abstract class_name BaseSlot
 extends BaseRegion
 
 const GRID_SLOT_MIN_SIZE = Vector2(64, 64)
@@ -23,3 +23,7 @@ func _set_player_owner(new_owner: GameBase.PlayerRef) -> void:
 
 func _get_player_owner() -> GameBase.PlayerRef:
 	return player_owner
+
+
+@abstract
+func _get_region_index()

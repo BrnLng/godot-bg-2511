@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://b0rudsvrxaxch"]
 
 [ext_resource type="Script" uid="uid://bkbqdo7lm7q8s" path="res://games/04_mini_carcassone.gd" id="1_bytq6"]
-[ext_resource type="PackedScene" uid="uid://b6g6lastox06f" path="res://scenes/components/carcassone_tile.tscn" id="2_v4o5k"]
+[ext_resource type="PackedScene" uid="uid://b6g6lastox06f" path="res://scenes/components/component_tile_carcassone_mini.tscn" id="2_v4o5k"]
 
 [node name="G-MiniCarcassone" type="Node2D"]
 script = ExtResource("1_bytq6")
-tile_type = ExtResource("2_v4o5k")
+game_tile_type = ExtResource("2_v4o5k")
 
 [node name="MainGridContainer" type="GridContainer" parent="."]
 unique_name_in_owner = true

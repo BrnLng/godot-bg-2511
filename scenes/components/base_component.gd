@@ -1,10 +1,13 @@
 class_name BaseComponent
 extends Button
 
+signal is_clicked(index: int)
+
+enum Rotation { ROT_0 = 0, ROT_90 = 90, ROT_180 = 180, ROT_270 = 270 }
+enum RotationDir { ROT_TOP = 0, ROT_LEFT = 270, ROT_DOWN = 180, ROT_RIGHT = 90 }
+
 var player_owner := GameBase.PlayerRef.NONE : set=set_player_owner, get=get_player_owner
 var region_index: int = -1 : set=set_region_index, get=get_region_index
-
-signal is_clicked(index: int)
 
 
 func _ready():

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6g6lastox06f"]
 
-[ext_resource type="Script" uid="uid://qu6lfb6gtaxj" path="res://scenes/components/region_grid_slot_positioned.gd" id="1_31ghw"]
+[ext_resource type="Script" uid="uid://cp1b4e3mxk81i" path="res://scenes/components/component_tile_carcassone_mini.gd" id="1_31ghw"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pdh2p"]
 size = Vector2(32, 32)
