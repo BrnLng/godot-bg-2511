@@ -54,10 +54,6 @@ func _update_score_history() -> void:
 	var best_of = get_game_round_best_of(get_score(PlayerRef.PLAYER_1), get_score(PlayerRef.PLAYER_2))
 	add_history("Player: [color=#33F]%d[/color] x Computer: [color=#C33]%d[/color]
 	in [color=#669]%s[/color]" % [get_score(PlayerRef.PLAYER_1), get_score(PlayerRef.PLAYER_2), best_of])
-	# this worked:
-	# var game_round = get_game_round_best_of(player_score, computer_score)
-	# add_history("Player: [color=#33F]%d[/color] x Computer: [color=#C33]%d[/color]\nin [color=#669]%s[/color]" % [player_score, computer_score, game_round])
-
 
 
 # This function is called when the reset button is pressed.

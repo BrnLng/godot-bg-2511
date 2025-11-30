@@ -92,7 +92,7 @@ func make_move(pit_index: int):
 	if current_pit != own_store:
 		pass_turn()
 	else:
-		hud_message("Extra turn for player " + str(current_player) + "!")
+		show_message("Extra turn for player " + str(current_player) + "!")
 
 
 func check_capture(last_pit: int):
@@ -158,7 +158,7 @@ func end_game():
 	else:
 		winner_text = "It's a Tie!"
 	
-	hud_message(winner_text)
+	show_message(winner_text)
 
 
 func update_display():

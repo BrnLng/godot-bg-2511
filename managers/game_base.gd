@@ -16,6 +16,7 @@ var is_game_over: bool = false
 # var game_count: int = 1
 var games_won: Vector2i = Vector2i.ZERO
 var best_of_threshold: int = 3
+var best_of_taken: bool = false
 
 # TODO: implement later:
 # var players_types: Vector2  # x = Human players, y = Computer
@@ -121,15 +122,19 @@ func to_panel_item(item:Node) -> void:
 
 
 ## Determine high score to calculate the current "best of" series.
+# TODO: Debug counters (sometimes it counts correctly, not always)
 func get_game_round_best_of(score_a, score_b) -> String:
 	var max_score_reached = max(score_a, score_b)
-	if (max_score_reached == best_of_threshold) or (max_score_reached == best_of_threshold + 2):
+	if (max_score_reached == best_of_threshold) or (max_score_reached == best_of_threshold + 2) \
+		and not best_of_taken:
 		if score_a > score_b:
 			games_won = Vector2i(games_won.x + 1, games_won.y)
 		else:
 			games_won = Vector2i(games_won.x, games_won.y + 1)
+		best_of_taken = true
 	if max_score_reached == best_of_threshold + 2:
 		best_of_threshold += 2
+		best_of_taken = false
 
 	return "(%d x %d) in best of %d" % [games_won.x, games_won.y, best_of_threshold]
 

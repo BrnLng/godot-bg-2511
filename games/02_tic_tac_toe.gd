@@ -11,7 +11,7 @@ func _ready():
 	setup_grid()
 	# await get_tree().create_timer(0.5).timeout
 	# hud_message("Welcome to Tic Tac Toe! It's Player 1's turn!")
-	call_deferred("hud_message", "Welcome to Tic Tac Toe! It's Player 1's turn!")
+	call_deferred("show_message", "Welcome to Tic Tac Toe! It's Player 1's turn!")
 
 
 func setup_grid():
@@ -27,7 +27,7 @@ func setup_grid():
 func _on_tile_clicked(index: int):
 	if is_game_over or tiles[index].player_owner != PlayerRef.NONE \
 		or index < 0 or index >= len(tiles):
-		hud_message("Invalid move")
+		show_message("Invalid move")
 		return
 	
 	tiles[index].player_owner = current_player
@@ -39,18 +39,18 @@ func _on_tile_clicked(index: int):
 			tiles[index].text = "o"
 			tiles[index].disabled = true
 		 
-	hud_history("Player [b]" + str(current_player) + "[/b] played at cell [i]" + _get_cell_name(index) + "[/i]")
+	add_history("Player [b]" + str(current_player) + "[/b] played at cell [i]" + _get_cell_name(index) + "[/i]")
 	
 	if check_winner():
 		is_game_over = true
 		disable_all_tiles()
-		hud_message("Player " + str(current_player) + " wins!")
+		show_message("Player " + str(current_player) + " wins!")
 	elif is_board_full():
 		is_game_over = true
-		hud_message("It's a draw!")
+		show_message("It's a draw!")
 	else:
 		# hud_message("It's Player " + str(next_player) + "'s turn")
-		TurnManager.pass_next()
+		pass_turn()
 
 
 func _get_cell_name(index) -> String:
