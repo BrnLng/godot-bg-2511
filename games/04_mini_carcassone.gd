@@ -1,6 +1,7 @@
 extends GameBase
 
-@export var tile_type: PackedScene
+# @export var tile_cell_type: BaseRegion
+@export var game_tile_type: PackedScene
 
 @onready var grid_container = %MainGridContainer
 var tiles: Dictionary[Vector2i, GridSlotPositionedRegion] = {}
@@ -13,31 +14,32 @@ func _ready():
 	setup_grid()
 
 func setup_grid():
+	if not game_tile_type:
+		push_error("tile_type PackedScene is not set in the inspector!")
+		return
+	
 	var screen_id = DisplayServer.window_get_current_screen()
 	var screen_size = DisplayServer.screen_get_size(screen_id)
 	var grid_size = Vector2(int(screen_size.x / TILE_SIZE.x), int(screen_size.y / TILE_SIZE.y))
 	grid_container.columns = grid_size.x
 
 	for j in range(grid_size.y):
-		for i in range(grid_size.x):
-			if not tile_type:
-				push_error("tile_type PackedScene is not set in the inspector!")
-				return
-			
-			var tile_instance = tile_type.instantiate()
-			var tile = tile_instance as GridSlotPositionedRegion
-			if not tile:
-				push_error("The root node of the tile_type scene must extend GridSlotPositionedRegion.")
-				tile_instance.queue_free() # Clean up the instance that we can't use
-				continue
+		for i in range(grid_size.x):		
+			# var tile_instance = tile_cell_type.new()  # tile_type.instantiate()
+			# var tile_cell = tile_instance as GridSlotPositionedRegion
+			var tile_cell = GridSlotPositionedRegion.new()
+			# if not tile_cell:
+			# 	push_error("The root node of the tile_type scene must extend GridSlotPositionedRegion.")
+			# 	tile_instance.queue_free()  # Clean up the instance that we can't use
+			# 	continue
 			
 			var index = Vector2i(i, j)
-			# tile.position = Vector2(i * TILE_SIZE.x, j * TILE_SIZE.y)  # autotiled because Control
-			tile.region_index = index
-			tile.on_clicked.connect(_on_tile_clicked)
-			tile.text = str(index)
-			tiles[index] = tile
-			grid_container.add_child(tile)
+			# TODO if needed: tile.position = Vector2(i * TILE_SIZE.x, j * TILE_SIZE.y)  # autotiled because Control
+			tile_cell.region_index = index
+			tile_cell.on_clicked.connect(_on_tile_clicked)
+			tile_cell.text = str(index)
+			tiles[index] = tile_cell
+			grid_container.add_child(tile_cell)
 
 func _on_tile_clicked(index: Vector2i):
 	if is_game_over or tiles[index].player_owner != PlayerRef.NONE \
