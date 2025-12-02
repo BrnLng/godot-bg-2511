@@ -13,6 +13,11 @@ func _ready():
 	grid_container.position = Vector2(-TILE_SIZE.x/2, -TILE_SIZE.y/2)
 	setup_grid()
 
+	var first_tile: MiniCarcassoneTileComponent = game_tile_type.instantiate() as MiniCarcassoneTileComponent
+	first_tile.text = "test"
+	first_tile.is_active = true
+	call_deferred("to_panel_item", first_tile)
+
 func setup_grid():
 	if not game_tile_type:
 		push_error("tile_type PackedScene is not set in the inspector!")

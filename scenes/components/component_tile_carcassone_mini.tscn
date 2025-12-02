@@ -1,19 +1,41 @@
-[gd_scene load_steps=3 format=3 uid="uid://b6g6lastox06f"]
+[gd_scene load_steps=4 format=3 uid="uid://b6g6lastox06f"]
 
 [ext_resource type="Script" uid="uid://cp1b4e3mxk81i" path="res://scenes/components/component_tile_carcassone_mini.gd" id="1_31ghw"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_pdh2p"]
 size = Vector2(32, 32)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ymdb"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [node name="CarcassoneTile" type="Button"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+custom_minimum_size = Vector2(96, 96)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -300.0
+offset_right = -304.0
+offset_bottom = -204.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_icons/icon = SubResource("PlaceholderTexture2D_pdh2p")
+theme_override_styles/hover = SubResource("StyleBoxFlat_5ymdb")
 text = "Left"
 alignment = 0
+autowrap_trim_flags = 0
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_31ghw")
+tile_id = "prototype"

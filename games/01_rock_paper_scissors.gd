@@ -16,8 +16,8 @@ func _ready() -> void:
 
 	var buttons_parent = rock_button.get_parent()  # any button would work
 	buttons_parent.get_parent().remove_child(buttons_parent)
-	call_deferred("to_panel_item", buttons_parent)
-	call_deferred("show_message", "Pick your choice to start!")
+	call_deferred(&"to_panel_item", buttons_parent)
+	call_deferred(&"show_message", "Pick your choice to start!")
 
 
 # This function is called when the player clicks one of the choice buttons.

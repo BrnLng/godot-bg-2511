@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://yq803y5kqwgm"]
+[gd_scene load_steps=4 format=3 uid="uid://yq803y5kqwgm"]
 
 [ext_resource type="Script" uid="uid://cgonuhnyh8bpo" path="res://scenes/main.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://b8bm1ksdgqjxa" path="res://managers/hud.gd" id="2_0wfyh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0wfyh"]
+blend_mode = 3
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
@@ -13,6 +16,7 @@ selected_game = 3
 script = ExtResource("2_0wfyh")
 
 [node name="Panel" type="Panel" parent="HUD"]
+material = SubResource("CanvasItemMaterial_0wfyh")
 custom_minimum_size = Vector2(0, 96)
 anchors_preset = 12
 anchor_top = 1.0
