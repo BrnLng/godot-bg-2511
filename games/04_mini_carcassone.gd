@@ -4,9 +4,10 @@ extends GameBase
 @export var game_tile_type: PackedScene
 
 @onready var grid_container = %MainGridContainer
-var tiles: Dictionary[Vector2i, GridSlotPositionedRegion] = {}
+var cells: Dictionary[Vector2i, GridSlotPositionedRegion] = {}
 
 const TILE_SIZE = Vector2(64, 64)
+
 
 func _ready():
 	super._ready()
@@ -17,6 +18,7 @@ func _ready():
 	first_tile.text = "test"
 	first_tile.is_active = true
 	call_deferred("to_panel_item", first_tile)
+
 
 func setup_grid():
 	if not game_tile_type:
@@ -41,29 +43,31 @@ func setup_grid():
 			var index = Vector2i(i, j)
 			# TODO if needed: tile.position = Vector2(i * TILE_SIZE.x, j * TILE_SIZE.y)  # autotiled because Control
 			tile_cell.region_index = index
-			tile_cell.on_clicked.connect(_on_tile_clicked)
+			tile_cell.on_clicked.connect(_on_cell_clicked)
 			tile_cell.text = str(index)
-			tiles[index] = tile_cell
+			cells[index] = tile_cell
 			grid_container.add_child(tile_cell)
 
-func _on_tile_clicked(index: Vector2i):
-	if is_game_over or tiles[index].player_owner != PlayerRef.NONE \
-		or index not in tiles.keys():  # or not index BUGS @ 0,0
+
+func _on_cell_clicked(index: Vector2i):
+	if is_game_over or cells[index].player_owner != PlayerRef.NONE \
+		or index not in cells.keys():  # or not index BUGS @ 0,0
 		print("Invalid move")
 		return
 	
-	tiles[index].player_owner = current_player
-	match tiles[index].player_owner:
-		PlayerRef.PLAYER_1:
-			#tiles[index].text = "x"
-			tiles[index].pivot_offset = Vector2(32, 32)
-			tiles[index].rotation_degrees = 270
-			tiles[index].disabled = true
-		PlayerRef.PLAYER_2:
-			#tiles[index].text = "o"
-			tiles[index].pivot_offset = Vector2(32, 32)
-			tiles[index].rotation_degrees = 90
-			tiles[index].disabled = true
+	cells[index].player_owner = current_player
+	cells[index].place_component(get_panel_item())
+	# match cells[index].player_owner:
+	# 	PlayerRef.PLAYER_1:
+	# 		#tiles[index].text = "x"
+	# 		cells[index].pivot_offset = Vector2(32, 32)
+	# 		cells[index].rotation_degrees = 270
+	# 		cells[index].disabled = true
+	# 	PlayerRef.PLAYER_2:
+	# 		#tiles[index].text = "o"
+	# 		cells[index].pivot_offset = Vector2(32, 32)
+	# 		cells[index].rotation_degrees = 90
+	# 		cells[index].disabled = true
 	
 	if check_winner():
 		is_game_over = true
@@ -75,25 +79,26 @@ func _on_tile_clicked(index: Vector2i):
 	else:
 		TurnManager.pass_next()
 
+
 func check_winner() -> bool:
 	return false
 
+
 func is_board_full() -> bool:
-	for tile_index in tiles.keys():
-		if tiles[tile_index].player_owner == PlayerRef.NONE:
+	for tile_index in cells.keys():
+		if cells[tile_index].player_owner == PlayerRef.NONE:
 			return false
 	return true
 
-func _on_turn_passed() -> void:
-	current_player = PlayerRef.PLAYER_2 if current_player == PlayerRef.PLAYER_1 else PlayerRef.PLAYER_1
 
 func disable_all_tiles():
-	for tile_index in tiles.keys():
+	for tile_index in cells.keys():
 		# if tile.player_owner == PlayerRef.NONE:
-		tiles[tile_index].disabled = true
+		cells[tile_index].disabled = true
+
 
 func reset_game():
 	super.reset_game()
 	
-	for tile_index in tiles.keys():
-		tiles[tile_index]._reset_slot()
+	for tile_index in cells.keys():
+		cells[tile_index]._reset_slot()

@@ -21,3 +21,9 @@ func on_hud_panel_update(item:Node) -> void:
 	Utils.remove_all_children(mid_panel)
 	mid_panel.add_child(item)
 	print("added item to panel: " + str(item))
+
+
+func get_hud_panel_node() -> Node:
+	var c = mid_panel.get_child(0)
+	mid_panel.remove_child(c)
+	return c

@@ -1,5 +1,5 @@
 class_name MiniCarcassoneTileComponent
-extends GridSlotPositionedRegion
+extends BaseComponent  # GridSlotPositionedRegion
 
 var is_double_sided : bool = false
 
@@ -24,5 +24,6 @@ var is_active: bool = false
 func _input(event):
 	if event.is_action_pressed("ui_accept") and is_active:  # and tile_in_hand: # Tecla 'R' / ui_rotate -> Enter
 		pivot_offset = Vector2(32, 32)
-		rotation_degrees = 270
+		rotate(RotationDirection.ROT_LEFT)
+		# rotation_degrees = 270
 		# tile_in_hand.rotate_clockwise() # Você precisará implementar isso no componente

@@ -18,6 +18,8 @@ var games_won: Vector2i = Vector2i.ZERO
 var best_of_threshold: int = 3
 var best_of_taken: bool = false
 
+var _plugged_hud: CanvasLayer
+
 # TODO: implement later:
 # var players_types: Vector2  # x = Human players, y = Computer
 # var players: Array[int]
@@ -29,6 +31,11 @@ var best_of_taken: bool = false
 func _ready() -> void:
 	# TODO: add randomize() some time later with fixed seed option
 	_initialize_base_game()
+
+
+func plug(where:String, what:Variant) -> void:
+	if where == "hud":
+		_plugged_hud = what
 
 
 func _initialize_base_game() -> void:
@@ -119,6 +126,12 @@ func add_history(msg:String) -> void:
 
 func to_panel_item(item:Node) -> void:
 	_to_panel_item.emit(item)
+
+
+func get_panel_item() -> Node:
+	if not _plugged_hud:
+		return
+	return _plugged_hud.get_hud_panel_node()
 
 
 ## Determine high score to calculate the current "best of" series.

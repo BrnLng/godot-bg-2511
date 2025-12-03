@@ -37,6 +37,7 @@ func _ready() -> void:
 		return
 
 	$GamePlug.add_child(_game)
+	_game.plug("hud", _hud)
 
 	_game._show_message.connect(_hud.on_hud_message_update)
 	_game._add_history.connect(_hud.on_hud_history_update)
