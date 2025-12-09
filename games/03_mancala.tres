@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameConfig" load_steps=2 format=3 uid="uid://cettksyaugefq"]
+
+[ext_resource type="Script" uid="uid://smdw22i0elgr" path="res://core/resources/game_config.gd" id="1_kp8aj"]
+
+[resource]
+script = ExtResource("1_kp8aj")
+game_name = "Mancala"
+player_count = 2
+board_size = Vector2i(8, 2)
+metadata/_custom_type_script = "uid://smdw22i0elgr"

@@ -1,6 +1,8 @@
 class_name GameBase
 extends Node2D
 
+@export var game_config: GameConfig
+
 signal _show_message(msg:String)
 signal _add_history(msg:String)
 signal _to_panel_item(item:Node)

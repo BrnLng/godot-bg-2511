@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameConfig" load_steps=2 format=3 uid="uid://d1ki0tpi717bm"]
+
+[ext_resource type="Script" uid="uid://smdw22i0elgr" path="res://core/resources/game_config.gd" id="1_inu2s"]
+
+[resource]
+script = ExtResource("1_inu2s")
+game_name = "Tic Tac Toe"
+player_count = 2
+board_size = Vector2i(3, 3)
+metadata/_custom_type_script = "uid://smdw22i0elgr"

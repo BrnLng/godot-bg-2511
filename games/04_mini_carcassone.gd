@@ -3,7 +3,7 @@ extends GameBase
 # @export var tile_cell_type: BaseRegion
 @export var game_tile_type: PackedScene
 
-@onready var grid_container = %MainGridContainer
+@onready var grid_container = %MainGridContainer  # as BaseRegion
 var cells: Dictionary[Vector2i, GridSlotPositionedRegion] = {}
 
 const TILE_SIZE = Vector2(64, 64)
@@ -45,6 +45,7 @@ func setup_grid():
 			tile_cell.region_index = index
 			tile_cell.on_clicked.connect(_on_cell_clicked)
 			tile_cell.text = str(index)
+			tile_cell.owner = grid_container
 			cells[index] = tile_cell
 			grid_container.add_child(tile_cell)
 

@@ -1,10 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://n64cl2lpcgcl"]
+[gd_scene load_steps=4 format=3 uid="uid://n64cl2lpcgcl"]
 
 [ext_resource type="Script" uid="uid://dg6gh8wyfq4dr" path="res://games/01_rock_paper_scissors.gd" id="1_uokcw"]
 [ext_resource type="FontFile" uid="uid://cdga3g45r6hw0" path="res://assets/NotoColorEmoji-Regular.ttf" id="2_f3mmy"]
+[ext_resource type="Resource" uid="uid://brb7es7vx4gk8" path="res://games/01_rock_paper_scissors.tres" id="2_qrqfo"]
 
 [node name="G-RPS" type="Node2D"]
 script = ExtResource("1_uokcw")
+game_config = ExtResource("2_qrqfo")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

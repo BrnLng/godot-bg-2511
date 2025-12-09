@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://djjglnqt4cjl5"]
+[gd_scene load_steps=3 format=3 uid="uid://djjglnqt4cjl5"]
 
 [ext_resource type="Script" uid="uid://dswo46uiflbbo" path="res://games/02_tic_tac_toe.gd" id="1_nvqy5"]
+[ext_resource type="Resource" uid="uid://d1ki0tpi717bm" path="res://games/02_tic_tac_toe.tres" id="2_phhpq"]
 
 [node name="G-TTT" type="Node2D"]
 script = ExtResource("1_nvqy5")
+game_config = ExtResource("2_phhpq")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
