@@ -5,6 +5,7 @@ extends GameBase
 
 @onready var grid_container = %MainGridContainer  # as BaseRegion
 var cells: Dictionary[Vector2i, GridSlotPositionedRegion] = {}
+var tile_deck: Array[MiniCarcassoneTileComponent] = []
 
 const TILE_SIZE = Vector2(64, 64)
 
@@ -14,10 +15,8 @@ func _ready():
 	grid_container.position = Vector2(-TILE_SIZE.x/2, -TILE_SIZE.y/2)
 	setup_grid()
 
-	var first_tile: MiniCarcassoneTileComponent = game_tile_type.instantiate() as MiniCarcassoneTileComponent
-	first_tile.text = "test"
-	first_tile.is_active = true
-	call_deferred("to_panel_item", first_tile)
+	_init_deck()
+	_draw_next_tile()
 
 
 func setup_grid():
@@ -50,6 +49,29 @@ func setup_grid():
 			grid_container.add_child(tile_cell)
 
 
+func _init_deck():
+	# Cria uma pilha inicial de tiles (ex: 20 peças)
+	for i in range(20):
+		# var first_tile: MiniCarcassoneTileComponent = game_tile_type.instantiate() as MiniCarcassoneTileComponent
+		# first_tile.text = "test"
+		# first_tile.is_active = true
+		# call_deferred("to_panel_item", first_tile)
+		var tile = game_tile_type.instantiate() as MiniCarcassoneTileComponent
+		tile.text = str(i) # Apenas para debug/visualização
+		tile.is_active = true
+		tile_deck.append(tile)
+	# TODO: ungate -- tile_deck.shuffle()
+
+
+func _draw_next_tile():
+	if tile_deck.is_empty():
+		print("Deck vazio! Não há mais peças para comprar.")
+		return
+
+	var next_tile = tile_deck.pop_back()
+	call_deferred("to_panel_item", next_tile)
+
+
 func _on_cell_clicked(index: Vector2i):
 	if is_game_over or cells[index].player_owner != PlayerRef.NONE \
 		or index not in cells.keys():  # or not index BUGS @ 0,0
@@ -78,7 +100,12 @@ func _on_cell_clicked(index: Vector2i):
 		is_game_over = true
 		print("It's a draw!")
 	else:
-		TurnManager.pass_next()
+		if tile_deck.is_empty():
+			is_game_over = true
+			print("Fim de jogo - Acabaram os tiles!")
+		else:
+			_draw_next_tile()
+			pass_turn()
 
 
 func check_winner() -> bool:
